@@ -1,22 +1,25 @@
 <script>
+	import {createEventDispatcher} from 'svelte';
+    
     export let date;
     export let cDate;
+
     export const events = [];
 
     const dayDate = new Date(date)
     const currentDate = new Date(cDate)
-
-    const dateNum = date.getDate()
+    const dateNum = dayDate.getDate()
+    const dispatch = createEventDispatcher();
 
     function develop(){
-        // display events and all
-        console.log("display "+daydate)
+        dispatch('displayDay', {
+            text: dayDate
+        });
     }
 
     function dayHighlight(){
         if(dayDate.getMonth() != currentDate.getMonth()) return "off"
-        console.log(dayDate.getDate()+"    "+currentDate.getDate())
-        return (dayDate.getDate() == currentDate.getDate())? "active" : "";
+        return (dateNum == currentDate.getDate())? "active" : "";
     }
 </script>
 

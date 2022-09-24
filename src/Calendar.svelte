@@ -26,6 +26,10 @@
     }
 
     var displayedDays = getExtendedMonthDays(current_date.getFullYear(), current_date.getMonth())
+    function test(event){
+		console.log("event catched")
+		console.log(event.detail.text)
+	}
 </script>
 
 <main>
@@ -41,7 +45,7 @@
     </div>
     <div class="wrapper">
         {#each displayedDays as day}
-            <CalDay date={day} cDate={current_date}/>
+            <CalDay date={day} cDate={current_date} on:displayDay/>
         {/each}
     </div>
 </main>
