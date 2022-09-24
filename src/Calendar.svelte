@@ -26,7 +26,6 @@
     }
 
     var displayedDays = getExtendedMonthDays(current_date.getFullYear(), current_date.getMonth())
-
 </script>
 
 <main>
@@ -54,12 +53,6 @@
         height: 40%;
         text-align: center;
     }
-
-    /* .wrapper div{
-        float: left;
-        background-color: hsl(180, 100%, 50%, 10%);
-        outline: 1px solid;
-    } */
 
     .wrapper {
         display: grid;
