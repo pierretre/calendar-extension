@@ -17,6 +17,6 @@
 	<!-- Image URL: <input type="text" bind:value={image} /> -->
 	<!-- <button on:click={change}>Change</button> -->
 	<!-- <p>{current_date}<p> -->
-	<!-- <Calendar /> -->
-	<Planning date={new Date()}/>
+	<Calendar />
+	<!-- <Planning date={new Date()}/> -->
 </main>  
