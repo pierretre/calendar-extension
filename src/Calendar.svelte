@@ -43,26 +43,31 @@
             updateUI()
             }}>+</button>
     </header>
-
-    <div class="wrapper head">
-        <div>Mon</div>
-        <div>Tue</div>
-        <div>Wed</div>
-        <div>Thu</div>
-        <div>Fri</div>
-        <div>Sat</div>
-        <div>Sun</div>
-    </div>
-    {#key displayedDays}
-        <div class="wrapper">
-            {#each displayedDays as day}
-                <CalDay date={day} cMonth={dateObj.getMonth()} on:displayDay/>
-            {/each}
+    <body>
+        <div class="wrapper head">
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+            <div>Sun</div>
         </div>
-    {/key}
+        {#key displayedDays}
+            <div class="wrapper">
+                {#each displayedDays as day}
+                    <CalDay date={day} cMonth={dateObj.getMonth()} on:displayDay/>
+                {/each}
+            </div>
+        {/key}
+    </body>    
 </main>
 
 <style>
+    body{
+        outline: 1px solid black;
+    }
+
     header{
         text-align: center;
     }

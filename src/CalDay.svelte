@@ -1,5 +1,6 @@
 <script>
 	import {createEventDispatcher} from 'svelte';
+    import { fly } from 'svelte/transition';
     
     export let date;
     export let cMonth;
@@ -15,7 +16,7 @@
 
     function develop(){
         dispatch('displayDay', {
-            text: "hi mom"
+            date: dateObj.toDateString()
         });
     }
 
@@ -25,7 +26,11 @@
 </script>
 
 <main>
-    <div class={dayHighlight()} on:click={develop}>{dateObj.getDate()}</div>
+    <div class={dayHighlight()} 
+        on:click={develop}
+        in:fly={{ y: -8 }}>
+        {dateObj.getDate()}
+    </div>
 </main>
 
 <style>
