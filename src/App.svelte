@@ -11,5 +11,5 @@
 </script>
 
 <main>
-	<Calendar on:displayDay={handleMessage}/>
+	<Calendar on:displayDay={handleMessage} dateObj={new Date()}/>
 </main>  

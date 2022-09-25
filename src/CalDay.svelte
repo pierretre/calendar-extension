@@ -2,29 +2,30 @@
 	import {createEventDispatcher} from 'svelte';
     
     export let date;
-    export let cDate;
+    export let cMonth;
 
-    export const events = [];
+    const dateObj = new Date(date)
+    const currentDate = new Date()
 
-    const dayDate = new Date(date)
-    const currentDate = new Date(cDate)
-    const dateNum = dayDate.getDate()
+    // set time to 0 for later comparison
+    dateObj.setHours(0, 0, 0, 0)
+    currentDate.setHours(0, 0, 0, 0)
+
     const dispatch = createEventDispatcher();
 
     function develop(){
         dispatch('displayDay', {
-            text: dayDate
+            text: "hi mom"
         });
     }
 
     function dayHighlight(){
-        if(dayDate.getMonth() != currentDate.getMonth()) return "off"
-        return (dateNum == currentDate.getDate())? "active" : "";
+        return ((dateObj.getTime() == currentDate.getTime())? "active" : "") + ((dateObj.getMonth() != cMonth)? " off" : "");
     }
 </script>
 
 <main>
-    <div class={dayHighlight()} on:click={develop}>{dateNum}</div>
+    <div class={dayHighlight()} on:click={develop}>{dateObj.getDate()}</div>
 </main>
 
 <style>
