@@ -1,15 +1,33 @@
 <script>
 	import Calendar from "./Calendar.svelte";
+	import DayInfos from "./DayInfos.svelte";
 	
 	var date = new Date();
-	let current_date = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+ date.getDate();
 	
 	function handleMessage(event){
-		const date = new Date(event.detail.date);	
-		// console.log(date)	
+		const month = event.detail.month
+		console.log(event.detail.date)
 	}
 </script>
 
 <main>
-	<Calendar on:displayDay={handleMessage} dateObj={new Date()}/>
-</main>  
+	<div class="wrapper1">
+		<div>
+		<Calendar 
+			on:displayDay={handleMessage} 
+			dateObj={date}/>
+		</div>
+		<div>
+			{#key date}
+			<DayInfos date={date}/>
+			{/key}
+		</div>
+	</div>
+</main> 
+
+<style>
+	.wrapper1 {
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+    }
+</style>

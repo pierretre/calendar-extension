@@ -1,15 +1,26 @@
 <script>
+    // props :
     export let dateObj;
-    import CalDay from "./CalDay.svelte"
 
+    // imports :
+    import CalDay from "./CalDay.svelte"
+	import {createEventDispatcher} from 'svelte';
+
+    // declaring const here
     const monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+    const dispatch = createEventDispatcher();
+
     var displayedDays = []
+    
     updateUI()
 
     function updateUI(){
         displayedDays = getExtendedMonthDays(dateObj.getFullYear(), dateObj.getMonth())
     }
 
+    // Function that returns a list of all days to display in the month
+    //      Adds last days of the previous month and first days of the next one's 
+    //      to fill the calendar starting from monday to sunday
     function getExtendedMonthDays(year, month){    
         let dates = [];
 
@@ -18,15 +29,23 @@
 
         const lastDay = new Date(year, month + 1, 1)
         lastDay.setDate(lastDay.getDate()-1)
-        lastDay.setDate(lastDay.getDate()+ (7-lastDay.getDay()%7));
+        lastDay.setDate(lastDay.getDate() + ((d = lastDay.getDay())? 7-d : 0));
         
         var d = new Date(firstDay) 
         while (d <= lastDay) {
             dates.push(new Date(d));
             d.setDate(d.getDate() + 1);
         }
+
         return dates;
     }
+
+    // // Called on:click on CalDay  
+    // function develop(){
+    //     dispatch('displayDay', {
+    //         date: dateObj.toDateString()
+    //     });
+    // }
 </script>
 
 <main>
@@ -36,7 +55,7 @@
             updateUI()
             }}>-</button>
         {#key displayedDays}
-            <h3 style="text-align: center;">{monthNames[dateObj.getMonth()]} {dateObj.getFullYear()}</h3>
+            <h3>{monthNames[dateObj.getMonth()]} {dateObj.getFullYear()}</h3>
         {/key}
         <button on:click={() => {
             dateObj.setMonth(dateObj.getMonth() + 1)
@@ -54,11 +73,11 @@
             <div>Sun</div>
         </div>
         {#key displayedDays}
-            <div class="wrapper">
-                {#each displayedDays as day}
-                    <CalDay date={day} cMonth={dateObj.getMonth()} on:displayDay/>
-                {/each}
-            </div>
+        <div class="wrapper">
+            {#each displayedDays as day}
+            <CalDay date={day} cMonth={dateObj.getMonth()} on:displayDay/>
+            {/each}
+        </div>
         {/key}
     </body>    
 </main>
@@ -77,13 +96,13 @@
     }
 
     h3{
-        width: 50%;
+        text-align: center;
+        width: 70%;
     }
     
     .head{
         background-color: rgb(207, 21, 21);
         width: auto;
-        height: 40%;
         text-align: center;
     }
 
