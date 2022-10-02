@@ -4,11 +4,10 @@
 
     // imports :
     import CalDay from "./CalDay.svelte"
-	import {createEventDispatcher} from 'svelte';
+    import Week from "./Week.svelte";
 
     // declaring const here
     const monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
-    const dispatch = createEventDispatcher();
 
     var displayedDays = []
     
@@ -40,12 +39,13 @@
         return dates;
     }
 
-    // // Called on:click on CalDay  
-    // function develop(){
-    //     dispatch('displayDay', {
-    //         date: dateObj.toDateString()
-    //     });
-    // }
+    function getWeeks(){
+        let ret = []
+        for (let i=0; i < (displayedDays.length/7); i++) {
+            ret[i] = displayedDays.slice(i*7, (i+1)*7)
+        }
+        return ret
+    }
 </script>
 
 <main>
@@ -63,7 +63,8 @@
             }}>+</button>
     </header>
     <body>
-        <div class="wrapper head">
+        <div class="head">
+            <div>&nbsp;</div>
             <div>Mon</div>
             <div>Tue</div>
             <div>Wed</div>
@@ -73,13 +74,18 @@
             <div>Sun</div>
         </div>
         {#key displayedDays}
-        <div class="wrapper">
+            {#each getWeeks() as week}
+            <Week days={week} currentMonth={dateObj.getMonth()} on:displayDay/>
+            {/each}
+        {/key}
+        <!-- {#key displayedDays}
+        <div>
             {#each displayedDays as day}
             <CalDay date={day} cMonth={dateObj.getMonth()} on:displayDay/>
             {/each}
         </div>
-        {/key}
-    </body>    
+        {/key} -->
+    </body>        
 </main>
 
 <style>
@@ -101,13 +107,15 @@
     }
     
     .head{
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
         background-color: rgb(207, 21, 21);
-        width: auto;
+        width: max-content;
         text-align: center;
     }
 
-    .wrapper {
+    /* body > div {
         display: grid;
-        grid-template-columns: repeat(7, 1fr);
-    }
+        grid-template-columns: repeat(8, 1fr);
+    } */
 </style>

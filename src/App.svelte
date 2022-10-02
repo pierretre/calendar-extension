@@ -4,14 +4,16 @@
 	
 	var date = new Date();
 	
+	// Handle day being return when clicked on calendar
 	function handleMessage(event){
+		date = new Date(event.detail.date)
 		const month = event.detail.month
 		console.log(event.detail.date)
 	}
 </script>
 
 <main>
-	<div class="wrapper1">
+	<div class="wrapper">
 		<div>
 		<Calendar 
 			on:displayDay={handleMessage} 
@@ -26,7 +28,7 @@
 </main> 
 
 <style>
-	.wrapper1 {
+	.wrapper {
         display: grid;
         grid-template-columns: repeat(2,1fr);
     }
