@@ -8,7 +8,6 @@
 
 <main>
     <h2 >{weekDays[dateObj.getDay()]} {dateObj.getDate()}</h2>
-
 </main> 
 
 <style>

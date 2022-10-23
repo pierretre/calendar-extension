@@ -1,12 +1,11 @@
 <script>
 	import Calendar from "./Calendar.svelte";
 	import DayInfos from "./DayInfos.svelte";
-	
-	var date = new Date();
-	
+	import {dateStore} from './stores.js'
+
 	// Handle day being return when clicked on calendar
 	function handleMessage(event){
-		date = new Date(event.detail.date)
+		dateStore.set(new Date(event.detail.date))
 		const month = event.detail.month
 		console.log(event.detail.date)
 	}
@@ -15,13 +14,13 @@
 <main>
 	<div class="wrapper">
 		<div>
-		<Calendar 
-			on:displayDay={handleMessage} 
-			dateObj={date}/>
+		<Calendar  
+			dateObj={$dateStore}
+			on:displayDay={handleMessage}/>
 		</div>
 		<div>
-			{#key date}
-			<DayInfos date={date}/>
+			{#key $dateStore}
+			<DayInfos date={$dateStore}/>
 			{/key}
 		</div>
 	</div>

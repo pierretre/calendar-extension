@@ -3,7 +3,6 @@
     export let dateObj;
 
     // imports :
-    import CalDay from "./CalDay.svelte"
     import Week from "./Week.svelte";
 
     // declaring const here
@@ -78,13 +77,6 @@
             <Week days={week} currentMonth={dateObj.getMonth()} on:displayDay/>
             {/each}
         {/key}
-        <!-- {#key displayedDays}
-        <div>
-            {#each displayedDays as day}
-            <CalDay date={day} cMonth={dateObj.getMonth()} on:displayDay/>
-            {/each}
-        </div>
-        {/key} -->
     </body>        
 </main>
 
@@ -113,9 +105,4 @@
         width: max-content;
         text-align: center;
     }
-
-    /* body > div {
-        display: grid;
-        grid-template-columns: repeat(8, 1fr);
-    } */
 </style>
