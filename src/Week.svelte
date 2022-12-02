@@ -1,6 +1,6 @@
 <script>
     export let days;
-    export let currentMonth;
+    export let cMonth;
 
     import CalDay from "./CalDay.svelte";
 
@@ -15,7 +15,7 @@
         <span>{getWeekNb()}</span>
     </div>
     {#each days as day}
-    <CalDay date={day} cMonth={currentMonth} on:displayDay/>
+    <CalDay date={day} cMonth={cMonth}/>
     {/each}
 </main>
 

@@ -3,18 +3,25 @@
     export let cMonth;
 
     import { fly } from 'svelte/transition';    
-	import {createEventDispatcher} from 'svelte';
+    import { dateStore } from './stores';
     
-    const dateObj = new Date(date)
+    const dayDate = new Date(date)
     const currentDate = new Date()
-    const dispatch = createEventDispatcher();
+    var dateObj = new Date()
+
+    dateStore.subscribe((data) => {
+		dateObj = new Date(data);
+	})
 
     // set time to 0 for later comparison
-    dateObj.setHours(0, 0, 0, 0)
+    dayDate.setHours(0, 0, 0, 0)
     currentDate.setHours(0, 0, 0, 0)
+    dateObj.setHours(0, 0, 0, 0)
 
     function dayHighlight(){
-        return ((dateObj.getTime() == currentDate.getTime())? "active" : "") + ((dateObj.getMonth() != cMonth)? " off" : "");
+        return ((dayDate.getTime() == currentDate.getTime())? "current" : "") 
+            + ((dayDate.getTime() == dateObj.getTime())? " selected" : "")
+            + ((dayDate.getMonth() != cMonth)? " off" : "");
     }
 </script>
 
@@ -22,12 +29,11 @@
     <div class={dayHighlight()}         
         in:fly={{ y: -8 }}
         on:click={() => {
-            dispatch('displayDay', {
-                date: dateObj.toDateString(),
-                month: cMonth
-            });
-        }}>
-        {dateObj.getDate()}
+            dateStore.update((data => {return dayDate}))
+        }}
+        on:keydown
+        on:keypress>
+        {dayDate.getDate()}
     </div>
 </main>
 
@@ -40,8 +46,12 @@
         opacity: 30%;
     }
 
-    .active{
+    .current{
         outline:3px solid black;
+    }
+
+    .selected{
+        background-color: darkorange;
     }
     
     div{

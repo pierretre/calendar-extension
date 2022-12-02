@@ -1,16 +1,18 @@
 <script>
-    // props :
-    export let dateObj;
-
     // imports :
     import Week from "./Week.svelte";
+    import { dateStore } from "./stores"; 
 
     // declaring const here
     const monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
 
     var displayedDays = []
-    
-    updateUI()
+    var dateObj = new Date();
+
+    dateStore.subscribe((data) => {
+		dateObj = new Date(data);
+        updateUI()
+	})
 
     function updateUI(){
         displayedDays = getExtendedMonthDays(dateObj.getFullYear(), dateObj.getMonth())
@@ -45,6 +47,7 @@
         }
         return ret
     }
+
 </script>
 
 <main>
@@ -74,7 +77,7 @@
         </div>
         {#key displayedDays}
             {#each getWeeks() as week}
-            <Week days={week} currentMonth={dateObj.getMonth()} on:displayDay/>
+            <Week days={week} cMonth={dateObj.getMonth()}/>
             {/each}
         {/key}
     </body>        
